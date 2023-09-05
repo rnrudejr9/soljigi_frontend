@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<link href="main.css" rel="stylesheet">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!--폰트 여기어때-->
+    <link href="https://webfontworld.github.io/goodchoice/Jalnan.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form  action="/view/v1/signup" method="post" th:object="${userJoinRequest}" >
+            <input>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form form action="/view/v1/signin" method="post" th:object="${userLoginRequest}">
+            <h1>로그인</h1>
+            <div class="social-container">
+                <a href="#" th:href="@{/oauth2/authorization/google}" class="social"><img src="/images/google.PNG" style="width:25px; height:25px"/><i class="fab fa-google-plus-g"></i></a>
+            </div>
+            <span>or use your account</span>
+            <input type="text" placeholder="Id" th:field="*{userName}" required />
+            <input type="password" placeholder="Password"th:field="*{password}" required/>
+
+            <span><a href="javascript:openPop()">아이디 찾기</a> / <a href="javascript:openPopPass()">비밀번호 찾기</a> </span>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>신한은행<br>치매예방</h1>
+                <p>거래내역 정보를 등록하고!<br>치매까지 예방하자</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>오늘부터 <br>운동 메이트!</h1>
+                <p>동네 근처 이웃들과 함께 즐기는 스포츠!<br>회원 가입 하고 같이 운동 메이트를 만들어요.</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--비밀번호 찾기 팝업 창-->
+<div class="popup_layer" id="findPassword_layer" style="display: none;">
+    <div class="popup_box">
+        <div class="popup_cont">
+            <h3> 비밀번호 찾기</h3>
+            <h5>비밀번호를 재설정 합니다.</h5>
+            <form>
+
+                <label>비밀번호를 찾고싶은 Id를 입력해 주세요</label>
+                <input type="text" placeholder="Id" id="idForFindPass" required />
+                <button style="margin-left: 10px" type="button" id="checkIdForFindPass" >인증코드 전송</button>
+                <div id="findPass" style="display: none">
+                    <input type="text" class="form-control" placeholder="인증코드" id="codeForPass" required>
+                    <button style="margin-left: 10px" type="button" id="btnForFindPass"  >인증번호 확인</button>
+                </div>
+                <div id="findPass2" style="display: none">
+                    <input type="text" class="form-control" placeholder="새 비밀번호" id="newPass" required>
+                    <button style="margin-left: 10px" type="button" id="resetPass"  >비밀번호 재설정</button>
+                </div>
+
+            </form>
+        </div>
+        
+    </div>
+</div>
+</body>
+<script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+    document.getElementById('write').addEventListener('click',checkEmail);
+    document.getElementById('check').addEventListener('click',checkCode);
+    document.getElementById('findId').addEventListener('click',findId);
+    document.getElementById('checkIdForFindPass').addEventListener('click',findPass);
+    document.getElementById('btnForFindPass').addEventListener('click',checkCodeForPass);
+    document.getElementById('resetPass').addEventListener('click',resetPass);
+
+</script>
+</html>
+
